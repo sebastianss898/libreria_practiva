@@ -6,8 +6,8 @@ using GestionBibliotecaApi.Repositories;
 
 public class MiembroService
 {
-    private readonly Repository<Miembro> _repo;
-    public MiembroService(Repository<Miembro> repo)
+    private readonly IRepository<Miembro> _repo;
+    public MiembroService(IRepository<Miembro> repo)
     {
         _repo = repo;
     }

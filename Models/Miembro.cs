@@ -9,6 +9,6 @@ public class Miembro
 
     [EmailAddress]
     public string Email {get; set;}= string.Empty;
-    public DateTime FechaRegistro {get; set;}
+    public DateTime FechaRegistro {get; set;} = DateTime.UtcNow;
 
 }

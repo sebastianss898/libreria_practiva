@@ -14,7 +14,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<LibreriaContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<LibroService>();
 builder.Services.AddScoped<MiembroService>();
 builder.Services.AddScoped<PrestamoService>();

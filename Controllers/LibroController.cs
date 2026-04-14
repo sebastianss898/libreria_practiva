@@ -33,7 +33,8 @@ public class LibroController : ControllerBase
     {
         var (success, error, libro) = await _service.Crear(dto);
         if (!success) return BadRequest(error);
-        return Created($"/Habitaciones/{libro!.Id}", libro);
+        return Created($"/libros/{libro!.Id}", libro);
+
     }
 
     [HttpDelete("{id}")]
@@ -44,9 +45,14 @@ public class LibroController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult>  Actualizar(int id, ActualizarLibroDto dto)
+    public async Task<IActionResult> Actualizar(int id, ActualizarLibroDto dto)
     {
         var libro = await _service.Actualizar(id, dto);
         return libro is null ? NotFound() : Ok(libro);
     }
+
+    [HttpGet("disponibles")]
+    public async Task<IActionResult> GetDisponibles() =>
+    Ok(await _service.GetDisponibles());
+
 }

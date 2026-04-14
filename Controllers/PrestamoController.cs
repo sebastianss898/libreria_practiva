@@ -49,4 +49,6 @@ public class PrestamoController : ControllerBase
         var prestamo = await _service.Actualizar(id, dto);
         return prestamo is null ? NotFound() : Ok(prestamo);
     }
+
+   
 }

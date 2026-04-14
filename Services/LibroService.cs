@@ -6,8 +6,8 @@ using GestionBibliotecaApi.Repositories;
 
 public class LibroService
 {
-    private readonly Repository<Libro> _repo;
-    public LibroService(Repository<Libro> repo)
+    private readonly IRepository<Libro> _repo;
+    public LibroService(IRepository<Libro> repo)
     {
         _repo = repo;
     }
@@ -33,23 +33,28 @@ public class LibroService
         return libro is null ? null : ToDto(libro);
     }
 
-    public async Task<(bool success, string error,LibroDto? dto)> Crear(CrearLibroDto dto)
+    public async Task<(bool success, string error, LibroDto? dto)> Crear(CrearLibroDto dto)
     {
+
+        if (string.IsNullOrEmpty(dto.Titulo))
+            return (false, "El título es requerido", null);
+
+
         var libro = new Libro
         {
-        Titulo = dto.Titulo,
-        Autor = dto.Autor,
-        Año = dto.Año,
-        Disponible = dto.Disponible
+            Titulo = dto.Titulo,
+            Autor = dto.Autor,
+            Año = dto.Año,
+            Disponible = dto.Disponible
         };
         await _repo.Add(libro);
-        return(true, string.Empty, ToDto(libro));
+        return (true, string.Empty, ToDto(libro));
     }
 
     public async Task<bool> Eliminar(int id)
     {
         var libro = await _repo.GetById(id);
-        if(libro is null) return false;
+        if (libro is null) return false;
 
         await _repo.Delete(libro);
         return true;
@@ -58,11 +63,17 @@ public class LibroService
     public async Task<LibroDto?> Actualizar(int id, ActualizarLibroDto dto)
     {
         var libro = await _repo.GetById(id);
-        if(libro is null) return null;
+        if (libro is null) return null;
 
         libro.Disponible = dto.Disponible;
 
         await _repo.SaveChanges();
         return ToDto(libro);
+    }
+
+    public async Task<List<LibroDto>> GetDisponibles()
+    {   
+        var libros = await _repo.GetAll();
+        return libros.Where(l => l.Disponible).Select(ToDto).ToList();
     }
 }

@@ -121,3 +121,4 @@ C:\Users\USER\Documents\XB28\GestionBibliotecaApi\obj\Debug\net10.0\refint\Gesti
 C:\Users\USER\Documents\XB28\GestionBibliotecaApi\obj\Debug\net10.0\GestionBibliotecaApi.pdb
 C:\Users\USER\Documents\XB28\GestionBibliotecaApi\obj\Debug\net10.0\GestionBibliotecaApi.genruntimeconfig.cache
 C:\Users\USER\Documents\XB28\GestionBibliotecaApi\obj\Debug\net10.0\ref\GestionBibliotecaApi.dll
+C:\Users\USER\Documents\XB28\GestionBibliotecaApi\obj\Debug\net10.0\GestionBibliotecaApi.sourcelink.json

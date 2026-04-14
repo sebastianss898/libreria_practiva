@@ -11,10 +11,12 @@ using GestionBibliotecaApi.Service;
 public class MiembroController : ControllerBase
 {
     public readonly MiembroService _service;
+    public readonly PrestamoService _prestamoService; // 👈
 
-    public MiembroController(MiembroService service)
+    public MiembroController(MiembroService service, PrestamoService prestamoService)
     {
         _service = service;
+        _prestamoService = prestamoService;
     }
 
     [HttpGet]
@@ -33,7 +35,7 @@ public class MiembroController : ControllerBase
     {
         var (success, error, miembro) = await _service.Crear(dto);
         if (!success) return BadRequest(error);
-        return Created($"/Habitaciones/{miembro!.Id}", miembro);
+        return Created($"/miembros/{miembro!.Id}", miembro);
     }
 
     [HttpDelete("{id}")]
@@ -44,9 +46,13 @@ public class MiembroController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult>  Actualizar(int id, ActualizarMiembroDto dto)
+    public async Task<IActionResult> Actualizar(int id, ActualizarMiembroDto dto)
     {
         var miembro = await _service.Actualizar(id, dto);
         return miembro is null ? NotFound() : Ok(miembro);
     }
+
+    [HttpGet("{id}/prestamos")]
+    public async Task<IActionResult> GetPrestamos(int id) =>
+        Ok(await _prestamoService.GetByMiembro(id));
 }
